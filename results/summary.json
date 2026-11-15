@@ -1,0 +1,50 @@
+{
+  "random_state": 42,
+  "MRR": {
+    "features": [
+      "vc",
+      "f",
+      "ap"
+    ],
+    "best": "SVR (RBF)",
+    "n_train": 354,
+    "n_test": 99,
+    "split": "grouped",
+    "best_params": {
+      "C": "100",
+      "epsilon": "0.01",
+      "gamma": "0.1"
+    },
+    "test_metrics": {
+      "R2": 0.9946271317054315,
+      "MAE": 322.8489693083332,
+      "MSE": 869338.7095349684,
+      "RMSE": 932.3833490227978,
+      "MAPE_%": 1.4080054224130345
+    }
+  },
+  "Ra": {
+    "features": [
+      "vc",
+      "f",
+      "ap",
+      "material"
+    ],
+    "best": "SVR (RBF)",
+    "n_train": 364,
+    "n_test": 89,
+    "split": "grouped",
+    "best_params": {
+      "C": "100",
+      "epsilon": "0.01",
+      "gamma": "0.1"
+    },
+    "test_metrics": {
+      "R2": 0.9769173136760859,
+      "MAE": 0.09037873624259665,
+      "MSE": 0.023568892154708646,
+      "RMSE": 0.15352163415854017,
+      "MAPE_%": 8.454059112526888
+    }
+  }
+}

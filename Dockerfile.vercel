@@ -1,0 +1,17 @@
+# Container image for Vercel Functions (Streamlit needs a long-running server + WebSockets).
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    MPLBACKEND=Agg \
+    PORT=80
+
+WORKDIR /app
+COPY requirements-deploy.txt .
+RUN pip install -r requirements-deploy.txt
+
+COPY . .
+
+EXPOSE 80
+CMD ["sh", "-c", "streamlit run app.py --server.port=${PORT} --server.address=0.0.0.0 --server.headless=true --server.enableCORS=false --server.enableXsrfProtection=false --browser.gatherUsageStats=false"]
