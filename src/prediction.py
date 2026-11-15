@@ -45,15 +45,24 @@ def save_bundle(bundle: dict, path: Path | None = None) -> Path:
     return path
 
 
+LOAD_ERRORS: dict = {}
+
+
 def load_bundle(target_kind: str) -> dict | None:
+    """Load a saved model; on failure the reason is kept in LOAD_ERRORS (e.g. library-version mismatch)."""
     path = MODEL_FILES[target_kind]
     if not path.exists():
+        LOAD_ERRORS[target_kind] = f"{path.name} not found"
         return None
     try:
         b = joblib.load(path)
-        return b if isinstance(b, dict) and "estimator" in b else None
-    except Exception:
-        return None
+        if isinstance(b, dict) and "estimator" in b:
+            LOAD_ERRORS.pop(target_kind, None)
+            return b
+        LOAD_ERRORS[target_kind] = f"{path.name} is not a model bundle"
+    except Exception as e:
+        LOAD_ERRORS[target_kind] = f"{path.name}: {type(e).__name__}: {e}"
+    return None
 
 
 def predict_one(bundle: dict, inputs: dict) -> float:

@@ -90,6 +90,9 @@ def need_model(kind: str) -> bool:
         name = "MRR" if kind == "MRR" else "surface roughness (Ra)"
         st.warning(f"No trained {name} model is available. Train one on the **Model Training** page "
                    f"(select target “{kind}”), then return here.")
+        from .prediction import LOAD_ERRORS
+        if kind in LOAD_ERRORS:
+            st.caption(f"Saved model could not be loaded — {LOAD_ERRORS[kind]}")
         st.page_link("views/model_training.py", label="Go to Model Training", icon=":material/model_training:")
         return True
     return False
